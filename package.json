@@ -1,0 +1,34 @@
+{
+  "name": "practice-react",
+  "version": "1.0.0",
+  "description": "This is a react project",
+  "main": "script.js",
+  "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aravind2309/React_practice.git"
+  },
+  "keywords": [
+    "react",
+    "index"
+  ],
+  "author": "Aravind",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aravind2309/React_practice/issues"
+  },
+  "homepage": "https://github.com/aravind2309/React_practice#readme",
+  "devDependencies": {
+    "parcel": "^2.13.3",
+    "process": "^0.11.10"
+  },
+  "dependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^6.29.0"
+  }
+}

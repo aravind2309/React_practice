@@ -1,17 +1,17 @@
 import RestaurantCard from "./RestaurantCard"
 import reslist from "../utils/mockData"
-import RestaurantCard from "./RestaurantCard"
-import { useEffect, useState } from "react"
+import UserContext from "./UserContext"
+import { useContext, useEffect, useState } from "react"
 import Shimmer from "./Shimmer"
 import { Link } from "react-router-dom"
 import useOnlineStatus from "../utils/useOnlineStatus"
 import { withPromotedLabel } from "./RestaurantCard"
 
+
 const Body = ()=>{
   const [listOfRestrauant,setlistOfRestrauant]=useState([]);
   const [searchText, setSearchText]=useState('');
   const[filteredRestrauant,setFilteredOfRestrauant]=useState([]);
-
   const RestaurantCardPromoted=withPromotedLabel(RestaurantCard);
   useEffect(()=>{
     fetchData();
@@ -33,22 +33,26 @@ const Body = ()=>{
  if (onlineStatus===false) 
 return(
  <h1>Something went wrong please check your internet connection</h1>)
-
+const{loggedInUser,setUserName}=useContext(UserContext);
   return listOfRestrauant.length === 0 ? <Shimmer/>:(
   <div className="body">
-    <div className="filter px-4">
-     <input type="text" className="search-box m-2 p-2 border border-solid border-black" value={searchText} onChange={(e)=> setSearchText(e.target.value)} ></input>
-      <button className="px-4 py-2 bg-red-200 m-4 rounded-lg" onClick={()=>{
+    <div className="filter flex ">
+      <input type="text" data-testid="searchInput" className="search-box m-2 p-2 flex border border-solid border-black" value={searchText} onChange={(e)=> setSearchText(e.target.value)} ></input>
+      <button className="p-2 m-2 bg-red-200 rounded-lg" onClick={()=>{
       const filteredres=listOfRestrauant.filter((res) => 
         res.info.name.toLowerCase().includes(searchText.toLowerCase()));
        setFilteredOfRestrauant(filteredres);
       }}>Search</button>
-      <button className="px-2 py-2 bg-gray-200 rounded-lg" onClick={()=>{
-          const filteredList=listOfRestrauant.filter((res)=>res.info.avgRating > 4);
+      <button className="p-2 m-2 flex bg-gray-200 rounded-lg" onClick={()=>{
+          const filteredList=listOfRestrauant.filter((res)=>res.info.avgRating > 4.5);
           setFilteredOfRestrauant(filteredList);
           }}>Top rated restaurant</button>
+          <div className="flex">
+          <label className="m-2 p-2">Username:</label>
+          <input type="text"className="border border-black p-2 m-2  " value={loggedInUser} onChange={(e)=>setUserName(e.target.value)}></input>
+          </div>
     </div>
-   <div className="res-container flex flex-wrap items-center text-center cursor-pointer ">
+   <div className="res-container flex flex-wrap justify-center text-center cursor-pointer ">
    {filteredRestrauant.map((restaurant) => (
       
       < Link key={restaurant.info.id} to={"restaurant/"+restaurant.info.id} className="restaurant-link">{restaurant.info.avgRating<3?

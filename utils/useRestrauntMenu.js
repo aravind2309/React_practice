@@ -9,7 +9,6 @@ const useRestrauantMenu=(rid)=>{
     const data= await fetch(MENU_API+rid);
     const json =await data.json();
 
-    console.log(json);
     setResInfo(json.data);
   };
   return resInfo;
